@@ -41,7 +41,12 @@ st.write("hahah omg")
 """
 #exec(program)
 
-
+hide_streamlit_style = """
+            <style>
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 
 
@@ -65,9 +70,6 @@ class StrategyClass:
 
 
 def ssh_packet_capture(host, user, password, timeout_duration):
-    #user='ubuntu'
-    #host='15.236.225.245'
-    #password='boba'
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(host, username=user, password=password)
@@ -98,6 +100,20 @@ def add_live_capture_labels():
     st.subheader("Head of captured packets dataframe:")
     st.write(Dataframe.X_test_live_packets.head(5))
 
+def populate_live_capture():
+    with st.form('Packet Capture Form'):
+        cols = st.beta_columns(2)
+        host = cols[0].text_input("IP address of SSH server capture/logging node", value='15.236.225.245')
+        user = cols[0].text_input("Username of SSH server capture/logging node", value='ubuntu')
+        password = cols[0].text_input("Password of SSH server capture/logging node", type="password", value='boba')
+        capture_duration = cols[1].number_input("Duration of live packet capture in seconds", min_value=1, max_value=9999, value=15)
+        packet_capture_submit = cols[1].form_submit_button('Apply Capture Options')
+    
+    start_capture_btn = st.button("Start Packet Capture")
+    if start_capture_btn:
+        ssh_packet_capture(host, user, password, capture_duration)
+
+
 
 #Defining visualization plot here
 def plot_column( col ):
@@ -122,6 +138,8 @@ def read_data():
     #Reading uploading dataset csv file here
     Dataframe.df = pd.read_csv(uploaded_file)
 
+    st.table(Dataframe.df.dtypes)
+
     #Replace NaN/Infinite values with 0
     Dataframe.df = Dataframe.df.fillna(0)
     Dataframe.df = Dataframe.df.replace([np.inf, -np.inf], 0)
@@ -143,8 +161,21 @@ def read_data():
     strategy.execute()
     strategy = StrategyClass(populate_preprocessors)
     strategy.execute()
-    #populate_statistics()
-    #populate_preprocessors()
+
+
+
+def show_metrics_reports():
+    st.header("Metrics Reports: ")
+    directory="MetricsReports"
+    for filename in os.listdir(directory):
+        if filename.endswith(".csv"): 
+            st.subheader(filename[:-4])
+            metric_csv = pd.read_csv(os.path.join(directory, filename))
+            st.write(metric_csv)
+            continue
+        else:
+            continue
+
 
 
 #@st.cache(suppress_st_warning=True)
@@ -387,7 +418,7 @@ def add_parameters(clf_name):
 
             GBC_submit = st.form_submit_button('Apply Selected Options')
 
-    if clf_name == 'Artificial Neural Networks':
+    if clf_name == 'LSTM':
         st.write(" ")
 
     if clf_name == 'Neural Networks':
@@ -433,7 +464,7 @@ class ClassifierFactory(object):
         if clf_name == 'Gradient Boosting Classifier':
             from sklearn.ensemble import GradientBoostingClassifier
             clf = GradientBoostingClassifier(n_estimators=params['n_estimators'], loss=params['loss'], max_depth=params['max_depth'])
-        if clf_name == 'Artificial Neural Networks':
+        if clf_name == 'LSTM':
             from keras.wrappers.scikit_learn import KerasClassifier
             from keras.models import Sequential
             from keras.layers import Dense
@@ -472,7 +503,7 @@ def get_prediction():
             Dataframe.X_train, Dataframe.X_test, Dataframe.y_train, Dataframe.y_test = train_test_split(Dataframe.X, Dataframe.y, test_size=0.2, random_state=1234)
 
             #Reshape dataframes for ANN models
-            #if(classifier_name == 'Artificial Neural Networks'):
+            #if(classifier_name == 'LSTM'):
             #    Dataframe.X_train = np.reshape(np.ravel(Dataframe.X_train), (Dataframe.X_train.shape[0], 1, Dataframe.X_train.shape[1]))
             #    Dataframe.X_test = np.reshape(np.ravel(Dataframe.X_test), (Dataframe.X_test.shape[0], 1, Dataframe.X_test.shape[1]))
             
@@ -497,6 +528,8 @@ def get_prediction():
                 st.write('Accuracy =', acc)
                 metrics = sklearn.metrics.classification_report(Dataframe.y_test, Dataframe.y_pred)
                 st.text(metrics)
+                st.write("Train score is:", clf.score(Dataframe.X_train, Dataframe.y_train))
+                st.write("Test score is:",clf.score(Dataframe.X_test, Dataframe.y_test))
                 
                 if report_btn:
                     report = sklearn.metrics.classification_report(Dataframe.y_test, Dataframe.y_pred, output_dict=True)
@@ -523,9 +556,9 @@ def get_live_packet_prediction():
             clf = classifier_factory.build_classifier(classifier_name, params)
 
             #Reshape dataframes for ANN models
-            if(classifier_name == 'Artificial Neural Networks'):
-                Dataframe.X_train = np.reshape(np.ravel(Dataframe.X_train), (Dataframe.X_train.shape[0], 1, Dataframe.X_train.shape[1]))
-                Dataframe.X_test = np.reshape(np.ravel(Dataframe.X_test), (Dataframe.X_test.shape[0], 1, Dataframe.X_test.shape[1]))
+            #if(classifier_name == 'LSTM'):
+                #Dataframe.X_train = np.reshape(np.ravel(Dataframe.X_train), (Dataframe.X_train.shape[0], 1, Dataframe.X_train.shape[1]))
+                #Dataframe.X_test = np.reshape(np.ravel(Dataframe.X_test), (Dataframe.X_test.shape[0], 1, Dataframe.X_test.shape[1]))
 
 
             #Import live packet capture data
@@ -574,40 +607,33 @@ def get_live_packet_prediction():
 
 
 
+
+
+
+
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
     read_data()
 
 
+
 #Populating classification sidebar here
+st.sidebar.header("Classification")
 classifier_name = st.sidebar.selectbox(
     'Select classifier',
-    ('Naive Bayes', 'KNN', 'SVM', 'Random Forest', 'Decision Tree', 'Logistic Regression', 'Gradient Boosting Classifier', 'Artificial Neural Networks', 'Neural Networks')
+    ('Naive Bayes', 'KNN', 'SVM', 'Random Forest', 'Decision Tree', 'Logistic Regression', 'Gradient Boosting Classifier', 'LSTM', 'Neural Networks')
 )
 params = add_parameters(classifier_name)
 
 
 prediction_type = st.selectbox('Select Imported Dataset or Live Packet Data Prediction', ['Imported Dataset','Live Packet Data'])
 if prediction_type == 'Live Packet Data':
-    with st.form('Packet Capture Form'):
-        cols = st.beta_columns(2)
-        host = cols[0].text_input("IP address of SSH server capture/logging node", value='15.236.225.245')
-        user = cols[0].text_input("Username of SSH server capture/logging node", value='ubuntu')
-        password = cols[0].text_input("Password of SSH server capture/logging node", type="password", value='boba')
-        capture_duration = cols[1].number_input("Duration of live packet capture in seconds", min_value=1, max_value=9999, value=15)
-        packet_capture_submit = cols[1].form_submit_button('Apply Capture Options')
-    
-    start_capture_btn = st.button("Start Packet Capture")
-    if start_capture_btn:
-        ssh_packet_capture(host, user, password, capture_duration)
+    populate_live_capture()
 
 
 report_btn = st.checkbox("Add classification task to Metrics Report")
 
 
-
-#ssh_packet_capture(10)
-#add_live_capture_labels()
 
 if(prediction_type == 'Imported Dataset'):
     get_prediction()
@@ -615,3 +641,7 @@ if(prediction_type == 'Live Packet Data'):
     get_live_packet_prediction()
 
 
+st.sidebar.subheader("Metrics Reports")
+metrics_reports_btn = st.sidebar.button("Show Metrics Reports")
+if metrics_reports_btn:
+    show_metrics_reports()

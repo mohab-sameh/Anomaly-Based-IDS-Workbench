@@ -45,6 +45,10 @@
 pip install requirements.txt
 ```
 
+
+
+
+<br />
 <h1 align='center'><i>Usage⌨️</i></h1>
 
 * Run app:

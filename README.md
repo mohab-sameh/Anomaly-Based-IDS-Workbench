@@ -11,6 +11,8 @@
 
 
 
+<br />
+
 
 <h1 align='center'><i>Some Features 📋</i></h1>
 
@@ -24,7 +26,7 @@
 * Cross-Platform usability 💻📱🖥️
 
 
-
+<br />
 
 <h1 align='center'><i>Tested Platforms 🖥️</i></h1>
 
@@ -33,7 +35,7 @@
 
 
 
-
+<br />
 
 <h1 align='center'><i>Installation 📜</i></h1>
 
@@ -54,7 +56,7 @@ streamlit run app.py
 
 
 
-
+<br />
 ## Published literature:
 * [M. S. Abdel-Wahab, A. M. Neil and A. Atia, "A Comparative Study of Machine Learning and Deep Learning in Network Anomaly-Based Intrusion Detection Systems," 2020 15th International Conference on Computer Engineering and Systems (ICCES), 2020, pp. 1-6, doi: 10.1109/ICCES51560.2020.9334553.](https://ieeexplore.ieee.org/document/9334553)
 

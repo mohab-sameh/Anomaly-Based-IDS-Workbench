@@ -138,6 +138,7 @@ def read_data():
     #Reading uploading dataset csv file here
     Dataframe.df = pd.read_csv(uploaded_file)
 
+    #st.table(Dataframe.df.dtypes)
 
     #Replace NaN/Infinite values with 0
     Dataframe.df = Dataframe.df.fillna(0)

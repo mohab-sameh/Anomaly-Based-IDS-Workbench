@@ -3,7 +3,7 @@
 <h1 align='center'> Anomaly-Based Intrusion Detection Workbench 🔍</h1>
 
 <p align='center'>This is a workbench for the research and development of Anomaly-Based Intrusion Detection Systems</a>.</p>
-
+<br />
 
 
 
@@ -32,6 +32,7 @@
 
 * Deployed on Windows 10 (20H2), Mac OS 10.14, Ubuntu 18.04/20.04
 * Access through any device with your browser of choice (tested on Firefox, Safari, MS Edge, Chrome, Opera).
+
 
 
 

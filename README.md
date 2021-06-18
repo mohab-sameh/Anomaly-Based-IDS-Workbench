@@ -8,7 +8,7 @@
 
 
 <h1 align='center'><i>Demo</i></h1>
-
+<img src="https://github.com/mohab-sameh/Anomaly-Based-IDS-Workbench/blob/main/Implementation/app-files/Demo/demo.gif" align="center">
 
 
 <br />

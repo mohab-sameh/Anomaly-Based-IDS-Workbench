@@ -10,6 +10,8 @@
 <h1 align='center'><i>Demo</i></h1>
 
 
+
+
 <h1 align='center'><i>Some Features 📋</i></h1>
 
 * Easily develop complete & usable machine learning and deep learning pipelines 🧠
@@ -21,10 +23,15 @@
 * Tons of Data exploration, preprocessing, machine learning, and deep learning tools! 💻
 * Cross-Platform usability 💻📱🖥️
 
+
+
+
 <h1 align='center'><i>Tested Platforms 🖥️</i></h1>
 
 * Deployed on Windows 10 (20H2), Mac OS 10.14, Ubuntu 18.04/20.04
 * Access through any device with your browser of choice (tested on Firefox, Safari, MS Edge, Chrome, Opera).
+
+
 
 
 
@@ -42,6 +49,7 @@ pip install requirements.txt
 streamlit run app.py
 ```
 * Use through your browser of choice. 
+
 
 
 

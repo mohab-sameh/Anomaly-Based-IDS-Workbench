@@ -8,3 +8,4 @@ matplotlib
 plotly_express
 altair
 paramiko
+s3fs==2021.6.1

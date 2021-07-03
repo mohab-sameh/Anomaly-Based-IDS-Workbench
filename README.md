@@ -72,7 +72,7 @@ pip install libpcap-dev
 * GCC ([installation instructions](https://linuxize.com/post/how-to-install-gcc-compiler-on-ubuntu-18-04/))
 * KDD Feature extractor ([repo](https://github.com/AI-IDS/kdd99_feature_extractor) or use my [prebuilt repo](https://github.com/mohab-sameh/Kdd99-Feature-Extractor-Prebuilt))
 
-
+note: please make sure the KDD Feature extractor is in the root directory (ex: ~/Kdd99-Feature-Extractor-Prebuilt/kdd99_feature_extractor-master)
 
 
 

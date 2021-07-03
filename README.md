@@ -18,6 +18,7 @@
 
 * Easily develop complete & usable machine learning and deep learning pipelines 🧠
 * Utilize 3rd Party Datasets (such as NSL-KDD, KDD-99, ISCX-NBXX) 📊
+* Connect and import CSV datasets through your AWS S3 buckets 🗃️
 * Perform Live Packet Capture & predict network attacks using your developed ML/DL Model! ☢️🔍
 * Export comparative Metrics of executed pipelines 📑
 * Simple and Intuitive GUI 🖥️

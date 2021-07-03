@@ -63,6 +63,22 @@ streamlit run app.py
 
 
 <br />
+<h1 align='center'><i>Packet Capture Dependencies 🔍</i></h1>
+
+* Libpcap:
+```
+pip install libpcap-dev
+```
+* GCC ([installation instructions](https://linuxize.com/post/how-to-install-gcc-compiler-on-ubuntu-18-04/))
+* KDD Feature extractor ([repo](https://github.com/AI-IDS/kdd99_feature_extractor) or use my [prebuilt repo](https://github.com/mohab-sameh/Kdd99-Feature-Extractor-Prebuilt))
+
+
+
+
+
+<br />
+
+
 
 <h2> 
   Published literature:

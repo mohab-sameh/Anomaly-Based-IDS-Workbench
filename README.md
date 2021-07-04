@@ -11,6 +11,8 @@
 <img src="https://github.com/mohab-sameh/Anomaly-Based-IDS-Workbench/blob/main/Implementation/app-files/Demo/demo.gif" align="center">
 
 
+<p align='center'> Try it yourself [here](https://share.streamlit.io/mohab-sameh/anomaly-based-ids-workbench/main/Implementation/app-files/app.py) </p>
+
 <br />
 
 

@@ -10,9 +10,6 @@
 <h1 align='center'><i>Demo</i></h1>
 <img src="https://github.com/mohab-sameh/Anomaly-Based-IDS-Workbench/blob/main/Implementation/app-files/Demo/demo.gif" align="center">
 
-
-* Try a cloud deployed instance [here](https://share.streamlit.io/mohab-sameh/anomaly-based-ids-workbench/main/Implementation/app-files/app.py)
-
 <br />
 
 
@@ -60,6 +57,7 @@ streamlit run app.py
 ```
 * Use through your browser of choice. 
 
+* Or Try a ready cloud-deployed instance [here](https://share.streamlit.io/mohab-sameh/anomaly-based-ids-workbench/main/Implementation/app-files/app.py)
 
 
 

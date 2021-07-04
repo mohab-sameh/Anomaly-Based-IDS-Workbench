@@ -6,6 +6,7 @@ scikit-learn
 pandas
 matplotlib
 plotly_express
+streamlit-echarts
 altair
 paramiko
 s3fs==2021.6.1

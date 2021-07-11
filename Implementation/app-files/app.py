@@ -95,7 +95,10 @@ class PacketCapture:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(host, username=user, password=password)
         st.success('Authentication Successful')
+        
         ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(f'sudo timeout {timeout_duration} ./Kdd99-Feature-Extractor-Prebuilt/kdd99_feature_extractor-master/build-files/src/kdd99extractor', get_pty=True)
+        #ssh.exec_command("\x03")
+        #ssh.exec_command("clear")
 
         output = ssh_stdout.readlines()[:-2]
         packet_capture_file = open('packet_capture.txt', 'w')
@@ -457,7 +460,7 @@ class Classifier:
                 
 
                 #Splitting training and testing dataframes here
-                Dataframe.X_train, Dataframe.X_test, Dataframe.y_train, Dataframe.y_test = train_test_split(Dataframe.X, Dataframe.y, test_size=0.2, random_state=1234)
+                Dataframe.X_train, Dataframe.X_test, Dataframe.y_train, Dataframe.y_test = train_test_split(Dataframe.X, Dataframe.y, test_size=Dataframe.ratio, random_state=1234)
 
                 #Reshape dataframes for ANN models
                 #if(classifier_name == 'LSTM'):
@@ -506,7 +509,7 @@ class Classifier:
                 st.write('Train to Test Ratio = ', Dataframe.ratio)
                 
                 #Splitting training and testing dataframes here
-                Dataframe.X_train, Dataframe.X_test, Dataframe.y_train, Dataframe.y_test = train_test_split(Dataframe.X, Dataframe.y, test_size=0.2, random_state=1234)
+                Dataframe.X_train, Dataframe.X_test, Dataframe.y_train, Dataframe.y_test = train_test_split(Dataframe.X, Dataframe.y, test_size=Dataframe.ratio, random_state=1234)
                 classifier_factory = ClassifierFactory()
                 clf = classifier_factory.build_classifier(classifier_name, params)
 
@@ -520,6 +523,7 @@ class Classifier:
                 #path2 = "custom-train-data.csv"
                 path2 = "packet_capture.csv"
                 Dataframe.X2_test = pd.read_csv(path2)
+                Dataframe.X2_test = Dataframe.X2_test.dropna(axis=0)
                 
                 #Keep only common columns between training data and live packet capture dataframes
                 common_cols = [col for col in set(Dataframe.X_test.columns).intersection(Dataframe.X2_test.columns)]
